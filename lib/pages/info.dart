@@ -12,7 +12,7 @@ class Info extends StatefulWidget {
 class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, Stock>{}) as Map;
+    final arguments = ModalRoute.of(context)!.settings.arguments as Stock;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Stock Info Page'),
@@ -38,13 +38,26 @@ class _InfoState extends State<Info> {
                   )
                 ],
               ),
-              // child: Text(arguments["stockData"].symbol)
+              // child: Text(arguments.stock_overview.previous_close)
               // ),
-              child: FutureBuilder<Stock>(
-                future: arguments['stockData'],
+              child: FutureBuilder<StockOverview>(
+                future: arguments.stock_overview,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    snapshot.data!.stock_overview.whenComplete((value) {return Text(value.open);});
+                  if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                    return Column(
+                      children: <Widget>[
+                        Text("Symbol: ${snapshot.data!.symbol}"),
+                        Text("Price: ${snapshot.data!.price}"),
+                        Text("Previous Close: ${snapshot.data!.previous_close}"),
+                        Text("Open: ${snapshot.data!.open}"),
+                        Text("Change: ${snapshot.data!.change}"),
+                        Text("Change %: ${snapshot.data!.change_percent}"),
+                        Text("High: ${snapshot.data!.high}"),
+                        Text("Latest Trading Day: ${snapshot.data!.latest_trading_day}"),
+                        Text("Low: ${snapshot.data!.low}"),
+                        Text("Volume: ${snapshot.data!.volume}"),
+                      ]
+                    );
                   } else if (snapshot.hasError) {
                     return Text('${snapshot.error}');
                   }

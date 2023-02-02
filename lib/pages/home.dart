@@ -12,12 +12,12 @@ class Home extends StatefulWidget{
 
 class _HomeState extends State<Home> {
   int counter = 0;
-  late Future<Stock> futureStock;
-  // late Stock futureStock;
+  // late Future<Stock> futureStock;
+  late Stock futureStock;
   @override
   void initState() {
     super.initState();
-    futureStock = fetchStock('msft');
+    // futureStock = await fetchStock('msft');
     // futureStock = Stock('msft');
   }
   // Create a text controller and use it to retrieve the current value
@@ -59,18 +59,20 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.search),
           onPressed: (){
-            setState(() {
-              fetchStock(myController.text).then((stock){
-                print("inside fetchstock.then()");
-                print(stock.symbol);
-                // futureStock = Stock(myController.text);
-                // futureStock = stock;
-                // print(futureStock);
-                // counter++;
-                Navigator.pushNamed(context, '/info', arguments: {
-                  'stockData': stock
-                });
-              });
+            setState(() async {
+              // futureStock = await Stock(myController.text);
+              Navigator.pushNamed(context, '/info', arguments: await Stock(myController.text));
+              // fetchStock(myController.text).then((stock){
+              //   print("inside fetchstock.then()");
+              //   print(stock.symbol);
+              //   // futureStock = Stock(myController.text);
+              //   // futureStock = stock;
+              //   // print(futureStock);
+              //   // counter++;
+              //   Navigator.pushNamed(context, '/info', arguments: {
+              //     'stockData': stock
+              //   });
+              // });
             });
           },
         ),

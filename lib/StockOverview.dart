@@ -4,16 +4,16 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 class StockOverview {
-  String _symbol = "";
-  String _open = "";
-  String _high = "";
-  String _low = "";
-  String _price = "";
-  String _volume = "";
-  String _latest_trading_day = "";
-  String _previous_close = "";
-  String _change = "";
-  String _change_percent = "";
+  late String _symbol;
+  late String _open;
+  late String _high;
+  late String _low;
+  late String _price;
+  late String _volume;
+  late String _latest_trading_day;
+  late String _previous_close;
+  late String _change;
+  late String _change_percent;
 
   StockOverview._create(this._symbol);
   static Future<StockOverview> create(String symbol) async
@@ -22,6 +22,7 @@ class StockOverview {
     // Call the private constructor
     var stock_overview = StockOverview._create(symbol);
     await stock_overview._getJson(symbol);
+    // stock_overview._setStockOverview(json);
     return stock_overview;
   }
   String get symbol => _symbol;
@@ -30,12 +31,12 @@ class StockOverview {
   String get low => _low;
   String get price => _price;
   String get volume => _volume;
-  String get latest_trading_day => _symbol;
+  String get latest_trading_day => _latest_trading_day;
   String get previous_close => _previous_close;
   String get change => _change;
   String get change_percent => _change_percent;
 
-  Future<dynamic> _getJson(String symbol) async {
+  dynamic _getJson(String symbol) async {
     String FUNCTION = "GLOBAL_QUOTE";
     String SYMBOL = symbol;
     String API_KEY = "MF1CDJUAAMBCPMJZ";
@@ -52,7 +53,7 @@ class StockOverview {
       dynamic json = jsonDecode(response.body);
       json = json["Global Quote"]; //Parse the wrapper object
       print(json);
-      _setStockOverview(json);
+      _setStockOverview(json); //set the private variables
       return jsonDecode(response.body);
     } else {
       // If the server did not return a 200 OK response,
