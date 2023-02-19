@@ -14,6 +14,7 @@ class StockOverview {
   late String _previous_close;
   late String _change;
   late String _change_percent;
+  late List<String> _keys;
 
   StockOverview._create(this._symbol);
   static Future<StockOverview> create(String symbol) async
@@ -35,6 +36,7 @@ class StockOverview {
   String get previous_close => _previous_close;
   String get change => _change;
   String get change_percent => _change_percent;
+  List<String> get keys => _keys;
 
   dynamic _getJson(String symbol) async {
     String FUNCTION = "GLOBAL_QUOTE";
@@ -53,15 +55,15 @@ class StockOverview {
       dynamic json = jsonDecode(response.body);
       json = json["Global Quote"]; //Parse the wrapper object
       print(json);
-      _setStockOverview(json); //set the private variables
-      return jsonDecode(response.body);
+      _init(json); //set the private variables
+      _keys = json.keys.toList(); //get json keys
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load album');
     }
   }
-  void _setStockOverview(dynamic json)
+  void _init(dynamic json)
   {
     this._symbol = json["01. symbol"];
     this._open = json["02. open"];

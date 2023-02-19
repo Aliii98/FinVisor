@@ -60,19 +60,7 @@ class _HomeState extends State<Home> {
           child: const Icon(Icons.search),
           onPressed: (){
             setState(() async {
-              // futureStock = await Stock(myController.text);
               Navigator.pushNamed(context, '/info', arguments: await Stock(myController.text));
-              // fetchStock(myController.text).then((stock){
-              //   print("inside fetchstock.then()");
-              //   print(stock.symbol);
-              //   // futureStock = Stock(myController.text);
-              //   // futureStock = stock;
-              //   // print(futureStock);
-              //   // counter++;
-              //   Navigator.pushNamed(context, '/info', arguments: {
-              //     'stockData': stock
-              //   });
-              // });
             });
           },
         ),
@@ -83,50 +71,4 @@ class _HomeState extends State<Home> {
   int getCount(){
     return counter;
   }
-  Future<Stock> fetchStock(String ticker) async {
-    // String FUNCTION = "GLOBAL_QUOTE";
-    // String SYMBOL = ticker;
-    // String API_KEY = "MF1CDJUAAMBCPMJZ";
-    // String OUTPUT_SIZE = "compact" ;
-    // print(SYMBOL);
-    // final response = await http
-    //     .get(
-    //     Uri.parse('https://www.alphavantage.co/query?function=$FUNCTION&symbol=$SYMBOL&apikey=$API_KEY'),
-    //     headers: {"Accept": "application/json"}
-    // );
-    // print('Sent Request Now (Home).. Awaiting Respoonse:');
-    // if (response.statusCode == 200) {
-    //   // If the server did return a 200 OK response,
-    //   // then parse the JSON.
-    //   return Stock.fromJson(jsonDecode(response.body));
-    // } else {
-    //   // If the server did not return a 200 OK response,
-    //   // then throw an exception.
-    //   throw Exception('Failed to load album');
-    // }
-    Stock future_stock = await Stock(ticker);
-    return future_stock;
-  }
-  // Future<Stock> get(String ticker) async {
-  //   String FUNCTION = "CASH_FLOW";
-  //   String SYMBOL = ticker;
-  //   String API_KEY = "MF1CDJUAAMBCPMJZ";
-  //   String OUTPUT_SIZE = "compact" ;
-  //   print(SYMBOL);
-  //   final response = await http
-  //       .get(
-  //       Uri.parse('https://www.alphavantage.co/query?function=$FUNCTION&symbol=$SYMBOL&outputsize=$OUTPUT_SIZE&apikey=$API_KEY'),
-  //       headers: {"Accept": "application/json"}
-  //   );
-  //   print('Sent Request Now.. Awaiting Respoonse:');
-  //   if (response.statusCode == 200) {
-  //     // If the server did return a 200 OK response,
-  //     // then parse the JSON.
-  //     return Stock.fromJson(jsonDecode(response.body));
-  //   } else {
-  //     // If the server did not return a 200 OK response,
-  //     // then throw an exception.
-  //     throw Exception('Failed to load album');
-  //   }
-  // }
 }
