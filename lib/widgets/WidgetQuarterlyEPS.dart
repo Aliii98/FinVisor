@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:finvisor/Stock.dart';
 import 'package:finvisor/data/FundamentalOverview.dart';
-import 'package:finvisor/data/StockOverview.dart';
+import 'package:finvisor/data/HistoricEPS.dart';
 
-class WidgetStockOverview extends StatelessWidget {
+class WidgetQuarterlyEPS extends StatelessWidget {
   final data;
-  const WidgetStockOverview(this.data);
+  const WidgetQuarterlyEPS(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -37,25 +37,30 @@ class Data extends StatelessWidget {
   const Data(this.data);
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<StockOverview>(
-      future: data.stock_overview,
+    return FutureBuilder<HistoricEPS>(
+      future: data.historic_eps,
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
-          return Column(
-              children: <Widget>[
-                Text("Symbol: ${snapshot.data!.symbol}"),
-                Text("Price: ${snapshot.data!.price}"),
-                Text("Previous Close: ${snapshot.data!.previous_close}"),
-                Text("Open: ${snapshot.data!.open}"),
-                Text("Change: ${snapshot.data!.change}"),
-                Text("Change %: ${snapshot.data!.change_percent}"),
-                Text("High: ${snapshot.data!.high}"),
-                Text(
-                    "Latest Trading Day: ${snapshot.data!.latest_trading_day}"),
-                Text("Low: ${snapshot.data!.low}"),
-                Text("Volume: ${snapshot.data!.volume}"),
-              ]
+          return Container(
+            // height: MediaQuery.of(context).size.height,
+            height: 100.0,
+            width: 500,
+            child:  ListView.builder(
+            // Let the ListView know how many items it needs to build.
+            itemCount: snapshot.data!.quarterly_eps.length,
+            // Provide a builder function. This is where the magic happens.
+            // Convert each item into a widget based on the type of item it is.
+            itemBuilder: (context, index) {
+              final item = snapshot.data!.quarterly_eps[index];
+              return ListTile(
+                leading: Icon(Icons.monetization_on),
+                title: Text("Reported: " + item.reportedEPS + ", Estimate ~ " + item.estimatedEPS + ", Surprise: " + item.surprisePercentage),
+                subtitle: Text(item.fiscalDateEnding),
+                trailing: Icon(Icons.percent_rounded),
+              );
+            },
+          ),
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');

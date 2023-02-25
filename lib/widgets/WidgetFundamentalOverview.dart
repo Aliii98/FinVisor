@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:finvisor/Stock.dart';
-import 'package:finvisor/StockOverview.dart';
-import 'package:finvisor/FundamentalOverview.dart';
+import 'package:finvisor/data/StockOverview.dart';
+import 'package:finvisor/data/FundamentalOverview.dart';
 
 class WidgetFundamentalOverview extends StatelessWidget {
   final data;
-  const WidgetFundamentalOverview({this.data});
+  const WidgetFundamentalOverview(this.data);
 
   @override
   Widget build(BuildContext context) {

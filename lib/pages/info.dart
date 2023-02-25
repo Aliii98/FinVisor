@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:finvisor/Stock.dart';
-import 'package:finvisor/StockOverview.dart';
-import 'package:finvisor/FundamentalOverview.dart';
+import 'package:finvisor/data/StockOverview.dart';
+import 'package:finvisor/data/FundamentalOverview.dart';
 import 'package:finvisor/widgets/WidgetStockOverview.dart';
 import 'package:finvisor/widgets/WidgetFundamentalOverview.dart';
+import 'package:finvisor/widgets/WidgetAnnualEPS.dart';
+import 'package:finvisor/widgets/WidgetQuarterlyEPS.dart';
 
 class Info extends StatefulWidget {
   const Info({Key? key}) : super(key: key);
@@ -24,8 +26,10 @@ class _InfoState extends State<Info> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            WidgetStockOverview(data: arguments),
-            WidgetFundamentalOverview(data: arguments),
+            WidgetStockOverview(arguments),
+            WidgetFundamentalOverview(arguments),
+            WidgetAnnualEPS(arguments),
+            WidgetQuarterlyEPS(arguments),
           ],
         ),
       ),
